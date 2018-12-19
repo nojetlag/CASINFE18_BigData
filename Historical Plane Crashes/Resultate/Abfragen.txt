@@ -1,0 +1,13 @@
+select * from crashes 
+
+Bezug zur Schweiz
+select * from crashes where location like '%Switzerland%'
+select * from crashes where operator like '%Swiss%'
+
+Rangliste mit den meisten Abstürzen
+select  operator , count(*) as anz from crashes where group by operator  order by anz desc
+
+Ohne Military crashes
+ select * from crashes where operator not like '%Military%' and operator not like '%USMC%' and operator not like '%Marines%' 
+  and operator not like '%Navy%'
+
