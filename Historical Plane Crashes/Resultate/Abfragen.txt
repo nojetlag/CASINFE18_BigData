@@ -2,7 +2,7 @@ select * from crashes
 
 Bezug zur Schweiz
 select * from crashes where location like '%Switzerland%'
-select * from crashes where operator like '%Swiss%'
+ select * from crashes where operator like '%Swiss%' or operATOR like '%Crossair%' or operator = 'Ju Air';
 
 Rangliste mit den meisten Abstürzen
 select  operator , count(*) as anz from crashes where group by operator  order by anz desc
@@ -11,3 +11,22 @@ Ohne Military crashes
  select * from crashes where operator not like '%Military%' and operator not like '%USMC%' and operator not like '%Marines%' 
   and operator not like '%Navy%'
 
+Mit Wetter als Absturzgrund
+select  Floor( cast(right(datum,4) as SIGNED  ) / 10 ) *10 as dek, count(*) 
+
+from planecrashinfo 
+
+where 
+right(datum, 4)  >= 1960 and
+operator not like '%Military%' and 
+operator not like '%USMC%' and 
+operator not like '%Marines%'  and 
+operator not like '%Navy%'  and
+  
+( summary like '%Severe turbulence%'  or  summary like '%Severe turbulence%' or summary like '%Windshear%' or summary like '%Mountain wave%'
+  or summary like '%Poor visibility%' or summary like '%Heave rain%' or 
+  summary like '%Severe winds%' or summary like '%Icing%' or summary like '%Thunderstorms%' or summary like '%Lightning strike%' )
+  
+group by dek
+  
+  
